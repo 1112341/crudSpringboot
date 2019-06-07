@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+
+body {
+  background: #2c3e50;
+  color: white;
+  font-family: monospace;
+  text-align: center; 
+}
+
+h3 {
+  padding: 12px;
+  border-top-right-radius: 20px;
+  font-weight: bolder;
+  letter-spacing: .1em;
+}
+
+.operator {
+	 display: inline-block;
+	
+}
+table th {
+	text-align: center; 
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<title>Hello World</title>
+<link href="Student.css" rel="stylesheet">
+<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="col-md-4">
+			<h3>ADD STUDENT</h3>
+			<form id="addStudent" action="">
+				<div class="form-group">
+					<input class="form-control" type="text" name="name"
+						placeholder="Name" required>
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="address"
+						placeholder="Address" required>
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="number" name="age" min="10"
+						max="100" placeholder="Age" required>
+				</div>
+				<button class="btn btn-primary form-control" type="submit">SUBMIT</button>
+			</form>
+		</div>
+		<div class="col-md-8">
+			<h3>STUDENT</h3>
+			<table id="studentTable" class="table table-striped">
+				<tr>
+					<th align="center">Name</th>
+					<th align="center">Age</th>
+					<th align="center">Address</th>
+					<th align="center">Operator</th>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="Student.js"></script>
+
+<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</html>

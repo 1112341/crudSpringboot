@@ -29,16 +29,18 @@
 			</form>
 		</div>
 		<div class="col-md-8">
-			<h3>STUDENT</h3>
+			<h3>STUDENTS LIST</h3>
 			<table id="studentTable" class="table table-striped">
 				<tr>
 					<th align="center">Name</th>
 					<th align="center">Age</th>
 					<th align="center">Address</th>
-					<th align="center">Operator</th>
+					<th align="center" colspan="2">Operator</th>
 				</tr>
 			</table>
+			<button class="btn btn-primary form-control" type="button" onClick = "location.href='http://localhost:8888/api/student/export';" >Export Data</button>
 		</div>
+		
 	</div>
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">

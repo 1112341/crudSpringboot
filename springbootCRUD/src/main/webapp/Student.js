@@ -1,9 +1,15 @@
 var students=[];
+function onExport() {
+	$.get( "http://localhost:8888/api/student/export", function( data ) {
+		console.log(data);
+		});
+	$.ajax
+}
 $( document).ready(function() {
 	$.get( "http://localhost:8888/api/students", function( data ) {
 		students = data;
 		$.each(data , function(i, data) {
-			  appendToUsrTable(data);
+			  appendToStudentTable(data);
 			});
 		});
 });
@@ -13,30 +19,34 @@ function getStudents(){
 		return data;
 		});
 }
-function flashMessage(msg) {
-	  $(".flashMsg").remove();
-	  $(".row").prepend(`
-	        <div class="col-sm-12"><div class="flashMsg alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> <strong>${msg}</strong></div></div>
-	    `);
-	}
-function deleteUser(id) {
+
+function deleteStudent(id) {
+	var flat = false;
 	var url = 'http://localhost:8888/api/students/' + id;
+	 var action = confirm("Are you sure you want to delete this user?");
+	students.forEach(function(student, i) {
+   	
+	 if (student.id == id && action != false) {
 	$.ajax({
 	    url: url, 
 	    type: 'DELETE',
 	    success: function(result) {
 
-	    	   var action = confirm("Are you sure you want to delete this user?");
-	    	   var msg = "Student deleted successfully!";
-	    	   students.forEach(function(student, i) {
+	    	   
+	    	   
 	    	     if (student.id == id && action != false) {
-	    	    	 students.splice(i, 1);
-	    	       $("#studentTable #student-" + student.id).remove();
-	    	       flashMessage(msg);
-	    	     }
-	    	   });
+	    	    	
+	  	    	   var msg = "Student deleted successfully!";
+	    	    	// students.splice(i, 1);
+	    	       $("#studentTable #user-" + student.id).remove();
+	    	       flat = true;
+	    	      // flashMessage(msg);
+	    	     }}}
+	    	   );
 	    }
+	 if (flat) return true;
 	});
+	
 };
 
 $("form").submit(function(e) {
@@ -64,11 +74,11 @@ $("form#addStudent").submit(function(){
 			console.log(response);
 			students.push(response);
 			console.log(students);
-			 appendToUsrTable(response);
+			 appendToStudentTable(response);
 		}
 	})
 });
-function editUser(id) {
+function editStudent(id) {
 	students.forEach(function(student, i) {
 		if (student.id === id) {
 			$(".modal-body").empty().append(`
@@ -87,9 +97,12 @@ function editUser(id) {
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </form>
     `);
+		    
+		  
 }
 
 function updateStudent(id) {
+	  var msg = "User updated successfully!";
 	console.log("update Student");
 	var temp = {};
 	temp.id = id;
@@ -121,29 +134,31 @@ function updateStudent(id) {
 		success : function (response) {
 			console.log(response);
 			console.log("update table");
-			$("#studentTable #student-" +id).children("#studentData").each(function(){
-				var attr = $(this).attr("name");
-				if (attr == "name") {
-					$(this).text = temp.name;
-				} else if (attr == "address") {
-					$(this).text = temp.address;
-				} else if (attr == "age") {
-					$(this).text = temp.age;
-				}
-			})
+		      $("#studentTable #user-" + id).children(".userData").each(function() {
+		          var attr = $(this).attr("name");
+		          if (attr == "name") {
+		            $(this).text(temp.name);
+		          } else if (attr == "address") {
+		            $(this).text(temp.address);
+		          } else {
+		            $(this).text(temp.age);
+		          }
+		        });
+			$(".modal").modal("toggle");
+		      
 		}
 	});
 }
-
-function appendToUsrTable(data) {
-	  $("#studentTable").append(`
-	        <tr id="student-${data.id}">
-	            <td class="studentData" name="name">${data.name}</td>
-	            '<td class="studentData" name="address">${data.age}</td>
-	            '<td id="tdAge" class="studentData" name="age">${data.address}</td>
-	            '<td align="center" class="operator">
-	                <button class="btn btn-success form-control" onClick="editUser(${data.id})" data-toggle="modal" data-target="#exampleModal")">EDIT</button></td>
-	              <td align="center" class="operator"> 
-	               <button class="btn btn-danger form-control" onClick="deleteUser(${data.id})">DELETE</button>
-	            </td>
+function appendToStudentTable(student) {
+	  $("#studentTable > tbody:last-child").append(`
+	        <tr id="user-${student.id}">
+            <td class="userData" name="name">${student.name}</td>
+            '<td class="userData" name="address">${student.address}</td>
+            '<td id="tdAge" class="userData" name="age">${student.age}</td>
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="editStudent(${student.id})" data-toggle="modal" data-target="#exampleModal")">EDIT</button>
+            </td>
+            <td align="center">
+                <button class="btn btn-danger form-control" onClick="deleteStudent(${student.id})">DELETE</button>
+            </td>
 	        </tr>`)};
